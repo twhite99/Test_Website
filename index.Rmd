@@ -19,25 +19,25 @@ output: html_document
 
 # **Thomas White**
 
-This is a template example for lab journaling. Students in Matt Crump's Human Cognition and Performance Lab will use this template to learn R, and other things. Students can replace this text with more fun things. People not in my lab can use this too.
+![](images/Rochester.jpg)
 
-## How to use
+# Welcome! I decided to make a simple website that showcases some of my work. See the about page to learn more about me, or the projects page to view a few of my most recent data science projects.
+<br>
 
-1. fork the repo for this website and follow instructions on read me to get set up. [https://github.com/CrumpLab/LabJournalWebsite](https://github.com/CrumpLab/LabJournalWebsite)
+### Info/Links:
 
-2. Blog/journal what you are doing in R, by editing the Journal.Rmd. See the [Journal page](https://crumplab.github.io/LabJournalWebsite/Journal.html) for an example of what to do to get started learning R.
-
-3. See the [links page](https://crumplab.github.io/LabJournalWebsite/Links.html) for lots of helpful links on learning R.
-
-4. Change everything to make it your own.
-
+Phone: (585) 469-6025
+email: twhite99@g.ucla.edu <br>
+[Github](https://github.com/twhite99) <br>
+[LinkedIn](www.linkedin.com/in/twhite99) <br>
+[Facebook](https://www.facebook.com/tommy.white.10888) <br>
 
 </div>
 <div class="col-sm-6">
 
-### [Crump Lab: Human Cognition and Performance](https://crumplab.github.io)
-
 <a href = "https://crumplab.github.io">
-![](images/logo.png)
+![](images/Royce.jpg)
+![](images/LA.jpg) <br>
+
 </a>
 </div>
