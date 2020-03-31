@@ -1,5 +1,5 @@
 ---
-title: "Tom.Test"
+title: "Thomas White"
 output: html_document
 ---
 
