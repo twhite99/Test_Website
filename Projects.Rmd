@@ -5,7 +5,7 @@ output: html_document
 
 ## Predicting Basketball Game Outcomes
 
-[Here](file:///Users/tomwhite/GitHub%20Projects/Test_Website/Project_links/101C-HW4.html) 
+[Here](https://twhite99.github.io/Test_Website/Project_links/101C-HW4.html) 
 
 <hr>
 
