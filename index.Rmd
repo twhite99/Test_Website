@@ -26,7 +26,7 @@ output: html_document
 
 ### Info/Links:
 
-Phone: (585) 469-6025
+Phone: (585) 469-6025 <br>
 email: twhite99@g.ucla.edu <br>
 [Github](https://github.com/twhite99) <br>
 [LinkedIn](www.linkedin.com/in/twhite99) <br>

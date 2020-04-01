@@ -1,0 +1,146 @@
+---
+title: "101C HW4"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+Chapter 5,: 2, 6, and 8
+Ex. 2
+```{r}
+# PART A
+## The probability that the first bootstrap observation is the jth observation is simply 1/n, so the probability that the first bootstrap observation is not the jth observation is (1 - 1/n).
+
+# PART B
+## Since we're sampling with replacement, the bootstrap observations are independent. Thus, the probaility of not selecting the jth element as the second bootstrap obs is equal to the prob of not selecting the jth element as the first bootstrap obs: 1 - 1/n.
+
+# PART C
+## Each selection of a bootstrap obs is independent, so to determine the probability of not selecting a particular element from the original sample n-times is simply the prob of not selecting the jth obs raised to the power of n. The pattern is shown below: 
+## From part (a); P(!jth element on 1st try) = (1-1/n)
+##  P(!jth element on 1st and 2nd tries) = (1-1/n)(1-1/n) = (1-1/n)^2
+## P(!jth element on all n tries) = (1-1/n)(1-1/n) ... = (1-1/n)^n
+
+# PART D
+## We need to add the probailities that the jth obs occurs once, twice, three times, four times, and five times in the sample, as these are all the possible cases in which the jth observation is included in the bootstrap sample. This is done below: 
+## Once: p = (1/5) * (4/5)^4
+## Twice: p = (1/5)^2 * (4/5)^3
+## Three times: p = (1/5)^3 * (4/5)^2
+## Four times: p = (1/5)^4 * (4/5)
+## Five times: p = (1/5)^5
+## We can also just take the complement of the probaility of not selecting the jth obs:
+1 - (4/5)^5
+
+# PART E
+## Using the same logic from before, the prob that jth obs is in the bootstrap sample is:
+1 - (99/100)^100
+
+# PART F
+## The prob that jth obs is in the bootstrap sample is:
+1 - (999/1000)^1000
+
+# PART G
+y.values = rep(0, 100)
+n = 1
+while(n <= 100){
+  y.values[n] = 1 - ((n-1) /n)^(n)
+  n = n + 1
+}
+plot(y.values, ylim = c(0.5, 1), type = "l", col = "Purple", xlab = "Sample Size", ylab = "Prob", main = "Prob. that jth obs in \n Bootstrap sample vs Sample Size")
+abline(h = 0.6323046, lty = 2)
+legend("topright", c("Probabilities", "Y = 0.6323046"), lty = c(1, 2), col = c("Purple", "Black"))
+
+## We can see that as n increases, the probaility of the bootstrap sample including the jth observation asymptotically approaches the theoretical probaility of roughly 0.632.
+
+# PART H
+set.seed(1)
+store=rep(NA, 10000)
+for(i in 1:10000){
+store[i]=sum(sample(1:100, rep=TRUE)==4)>0
+}
+mean(store)
+## This tells us that 64.17% of the samples generated contained at least one instance of the jth, or 4th, observation. This value is close to the probailities obtained in parts (d), (e), and (f), and we may conclude that increasing the number of runs of the simulation will bring the estimate closer to the theoretical values obtained earlier. 
+```
+
+Ex. 6
+```{r}
+# PART A
+library(ISLR)
+datas <- Default
+attach(datas)
+m1 <- glm(default ~ income + balance, family = binomial)
+summary(m1)$coeff
+
+## Estimated std. error of income: 4.985167e-06
+## Estimated std. error of balance: 2.273731e-04
+
+# PART B
+boot.fn=function(data,index){
+return(coef(glm(default ~ income + balance, data = datas, subset = index, family = binomial)))
+}
+boot.fn(datas, 1:length(income))
+## Coefficient for income: 2.080898e-05
+## Coefficient for balance: 5.647103e-03 
+
+# PART C
+library(boot)
+boot(datas, boot.fn, 1000)
+## We can see that the estimated std. errors for income and balance using the bootstrap method (R = 1000) are 5.215173e-06 and 2.462842e-04, respectively.
+
+# PART D
+## We can see that the bootstrap std. error estimates for the coefficients in the logistic regression model are slightly higher than those given directly by the logistic model (5.215173e-06 vs 4.985167e-06 for income and 2.462842e-04 vs 2.273731e-04 for balance). This is somewhat strange considering that bootstrap estimates do not rely on any prior assumptions about the data, and as a result they tend be to more accurate and give smaller std. error estimates. Perhaps this oddity is the result of only running R = 1000 simulations in the boot() function. Unfortunetly, my computer cannot process the function with values greater than R = 1000.
+```
+
+Ex. 8
+```{r}
+# PART A
+set.seed(1)
+x=rnorm(100)
+y=x-2*x^2+rnorm(100)
+## n = 100 and p=2, assuming that p represents the number of predictors. The formula for this model would be: 
+## Y = b0 + b1(x) + b2(x^2) + e, where b0 = 0, b1 = 1, b2 = -2, and e represents the random error term.
+
+# PART B
+plot(y ~ x)
+## As shown from the scatterplot, the data appears to have a positive linear relationship for x < 0 and a negative linear relationship for x > 0, which gives the overall data a parabolic shape with an apex around x = 0.2.
+
+# PART C
+set.seed(100)
+library(boot)
+datas <- data.frame(y, x)
+cv.error <- rep(0, 4)
+for(i in 1:4){
+m1 <- glm(y ~ poly(x ,i), data = datas)
+cv.error[i] <- cv.glm(datas, m1)$delta[1]
+}
+cv.error
+
+# PART D
+set.seed(550)
+cv.error2 <- rep(0, 4)
+for(i in 1:4){
+m2 <- glm(y ~ poly(x ,i), data = datas)
+cv.error2[i] <- cv.glm(datas, m2)$delta[1]
+}
+cv.error2
+## Yes they are the same results, despite having a different seed. 
+
+# PART E
+## The quadratic model has the lowest LOOCV error, which makes sense since we defined y as the sum of a linear and quadratic term in x. We can see that the LOOCV error drops considerably upon introducing the quadratic term, and then slightly increases with the addition of higher order terms. This indicates that the first two terms of the full model (linear and quadratic) explain most of the variance in Y, and the remaining terms do not contribute much to the accuracy of the model. Again, this makes sense given that we defined y as a function of x and x^2. 
+
+# PART F
+x.sq <- x^2
+x.cube <- x^3
+x.quad <- x^4
+m3 <- lm(y ~ x)
+m4 <- lm(y ~ x + x.sq)
+m5 <- lm(y ~ x + x.sq + x.cube)
+m6 <- lm(y ~ x + x.sq + x.cube + x.quad)
+result <- data.frame("m3 P-values" = c(summary(m3)$coeff[, 4], rep(0, 3)), "m4 P-values" = c(summary(m4)$coeff[, 4], rep(0, 2)), "m5 P-values" = c(summary(m5)$coeff[, 4], 0), "m6 P-values" = summary(m6)$coeff[, 4])
+rownames(result) = c("Intercept", "x", "x^2", "x^3", "x^4")
+colnames(result) = c("P-vals: Linear Model", "Quadratic Model", "Cubic Model", "Quartic Model")
+
+## The summary of each of the models affirms what we concluded from the LOOCV error terms: The linear and quadratic are the only significant predictors, as shown by the p-value dataframe below. Furthermore, the linear and quadratic models are the most accurate statistical learning methods for this simulated data, shown by both the individual linear models and cross-validation.
+result
+
+```

@@ -3,7 +3,20 @@ title: "Projects"
 output: html_document
 ---
 
-## Project 1
+## Predicting Basketball Game Outcomes
 
-[Here](https://twhite99.github.io/Test_Website/Project_links/Test.html)
+[Here](file:///Users/tomwhite/GitHub%20Projects/Test_Website/Project_links/101C-HW4.html) 
+
+<hr>
+
+## Forecasting the number of applicants recieved by Colleges
+
+[Here](file:///Users/tomwhite/GitHub%20Projects/Test_Website/Project_links/Test.html)
+
+<hr>
+
+## Modeling the weights of babies at birth
+
+[Here](file:///Users/tomwhite/GitHub%20Projects/Test_Website/Project_links/Test.html)
+
 
