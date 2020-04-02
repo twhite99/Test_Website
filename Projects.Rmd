@@ -3,9 +3,9 @@ title: "Projects"
 output: html_document
 ---
 
-## Predicting Basketball Game Outcomes
+<br>
 
-[Here](https://twhite99.github.io/Test_Website/Project_links/101C-HW4.html) 
+## [Predicting Basketball Game Outcomes](https://twhite99.github.io/Test_Website/Project_links/101C-HW4.html) <br>
 
 <hr>
 
